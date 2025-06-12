@@ -1,27 +1,21 @@
-
-set_numbers: list = [str(j) for j in range(0, 10)]
-
-
-def disassemble(commands: str, i: int = 0):
+# 139232218
+def disassemble(commands: str, index: int = 0):
     number: str = ''
     result: str = ''
-    while i < len(commands):
-        while commands[i] in set_numbers:
-            number += commands[i]
-            i += 1
-            continue
-        if commands[i] == '[':
-            i += 1
-            sub_result, new_i = disassemble(commands, i)
+    while index < len(commands):
+        element = commands[index]
+        if element.isdigit():
+            number += element
+        elif element == '[':
+            sub_result, new_index = disassemble(commands, index+1)
             result += int(number) * sub_result
             number = ''
-            i = new_i
-        elif commands[i] == ']':
-            i += 1
-            return result, i
+            index = new_index
+        elif element == ']':
+            return result, index
         else:
-            result += commands[i]
-            i += 1
+            result += element
+        index += 1
     return result
 
 
